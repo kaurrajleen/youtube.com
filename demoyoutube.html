@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" crossorigin="anonymous" />
+    <script type="text/javascript" src="js/FBJSSDK.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0rc1/src/instafeed.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+</head>
+<style>
+    .form-control {
+        width: 60%;
+    }
+    
+    h1 {
+        margin-top: 5%!important;
+        font-size: 32px!important;
+    }
+    
+    input.btn.btn.-danger {
+        color: #fff;
+        text-decoration: none;
+        background-color: #3EC0FC;
+        border-radius: 12px;
+        width: 12%;
+    }
+    
+    button.post {
+        margin-top: -3%!important;
+        float: right;
+        text-decoration: none;
+        background-color: #3EC0FC;
+        color: #fff;
+        border: none;
+        position: absolute;
+        right: 25%;
+        padding: 7px 20px;
+        font-size: 20px;
+        margin: 15px 6px;
+        border-radius: 12px;
+        width: 12%
+    }
+    
+    label.chkk {
+        position: absolute;
+        top: 96px;
+    }
+    
+    label.exp {
+        position: absolute;
+        bottom: 297px;
+    }
+    
+    label.chk {
+        position: absolute;
+        left: 437px;
+        top: 96px;
+    }
+    
+    label.exppp {
+        position: absolute;
+        top: 416px;
+    }
+    
+    label.expp {
+        position: absolute;
+        left: 437px;
+        top: 416px;
+    }
+    
+    div#filtericon {
+        position: absolute;
+        width: 100%;
+        border-bottom: 1px solid lightgrey;
+        top: 0%;
+    }
+    
+    td,
+    th {
+        padding: 8px;
+    }
+    
+    .flters {
+        display: none;
+        margin-top: 7%;
+    }
+    
+    div#videos {
+        margin-top: 10%;
+        column-count: 2;
+    }
+    
+    td {
+        cursor: pointer;
+    }
+</style>
+<script>
+    /* $(document).ready(function(){
+                                        var API_KEY ="AIzaSyBSl6lZ6kNBUOo7P4ELumeQN7GQVZbSIvI"
+                                        $pagination=$("#pagination"),
+                                        totalRecords =0,
+                                        records=[]
+                                        recPerPage=0,
+                                        nextPageToken ="",
+                                        totalPages =0
+                                        var video =''
+                                        
+                                        $("#form").submit(function(event){
+                                            event.preventDefault()
+
+                                            var search=$("#search").val()
+                                            
+                                            videosearch(API_KEY,search,20)
+                                            $('#videos').append('<br><label class="exp" style="margin-bottom: 5px; display: inline-block;"><input type="checkbox" class="exp" name="videos[]"> </label>').append('<br><label class="expp" style="margin-bottom: 5px; display: inline-block;"><input type="checkbox" class="expp" name="videos[]"> </label>').append('<br><label class="exppp" style="margin-bottom: 5px; display: inline-block;"><input type="checkbox" class="exppp" name="videos[]">  </label>').append('<br><label class="chk" style="margin-bottom: 5px; display: inline-block;"><input type="checkbox" class="chk" name="videos[]"> </label>').append('<br><label class="chkk" style="margin-bottom: 5px; display: inline-block;"><input type="checkbox" class="chkk" name="videos[]">  </label>')
+                                            .append('<div id="filtericon"><img id="filter" src="img/posting administration/filter-list.png"/><label class="fil" style="margin-bottom: 5px; display: inline-block;">FILTERS</label></div>');
+                                $('"https://www.youtube.com/embed/${item.id.videoId}').append('<input type="checkbox" class="exp" name="videos[]">')
+                                $(document).on("click",".SelectAll",function(){
+                                  $("input[name='videos[]']").prop('checked',$(this).is(':checked'))
+                                })
+
+
+                                        })
+                                        function videosearch(key,search,maxresults){
+                                            $.get("https://www.googleapis.com/youtube/v3/search?key="+ key + "&type=video&part=snippet&maxresults="  + maxresults + "&q=" + search,function(data){
+                                       console.log(data)
+                                    
+
+                                       data.items.forEach(item => {
+                                           video=`
+                                           <iframe width="420" height="315 " 
+                                src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>
+                                `
+                                $("#videos").append(video)
+
+                                       });
+                                       $('img#filter').on("click",function(e){
+                                   $('.flters').toggle('');
+                                  });
+                                    })
+                                    
+                                    }
+                                   
+                                    })*/
+
+
+    $(document).ready(function() {
+        $("#header").load("siteHeader.html");
+        setTimeout(() => {
+            $("#toolName").html(" Posting Administration Tool");
+            $("div#Homeheader > span > img#toolImg").attr(
+                "src",
+                "img/posting administration/Posting_Tool_Deselected.png"
+            );
+        }, 500);
+
+        if (window.location.pathname.indexOf("account") > -1) {
+            $("#toolName").html("Posting Administration Tool");
+            $("div#Homeheader > span > img#toolImg").attr(
+                "src",
+                "img/posting administration/Posting_Tool_Deselected.png"
+            );
+        }
+        $(document).on('click', 'input.exp', (ele) => {
+
+            $('input.exp:checked').prop('checked', false);
+            $(ele.target).prop('checked', true);
+        });
+
+        //         $(document).on('click', '.flters tbody tr:not(:nth-child(1)) td:last-child', (ele) => {
+        //             let url2 = '';
+        //         const orderforthis  = $(ele.target).text().toLowerCase();
+        //         if (orderforthis === 'upload date') {
+        //             url2 =`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}
+        //         &part=snippet&maxResults=${maxResults}&type=video&q=${search}&order=date`;
+        //             forsort(event, url2);
+        //         } else if (orderforthis === 'rating') {
+        //             url2 =`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}
+        //         &part=snippet&maxResults=${maxResults}&type=video&q=${search}&order=rating`;
+        //             forsort(event, url2);
+        //         } else if (orderforthis === 'relevance') {
+        //             url2 =`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}
+        //         &part=snippet&maxResults=${maxResults}&type=video&q=${search}&order=relevance`;
+        //             forsort(event, url2);
+        //         } else if (orderforthis === 'view count') {
+        //             url2 =`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}
+        //         &part=snippet&maxResults=${maxResults}&type=video&q=${search}&order=viewCount`;
+        //             forsort(event, url2);
+        //         }
+        // });
+        var search,
+            API_KEY = "AIzaSyDsRUopGfzjkbI4TrfLKi6NzPwkTnXL848",
+            userid = "UCk8GzjMOrta8yxDcKfylJYw",
+
+            viewcount = document.getElementById('viewCount'),
+            url,
+            $pagination = $("#pagination"),
+            totalRecords = 0,
+            records = []
+        recPerPage = 0,
+            nextPageToken = "",
+            totalPages = 0,
+            videos = []
+
+        duration = "any"
+
+        //var beforedate = new Date().toISOString();
+        // var afterdate = new Date().toISOString();
+        maxResults = 10;
+
+
+        //$("#beforedate").val(beforedate)
+        //$("#afterdate").val(afterdate)
+
+
+        //$("#duration").change(function () {
+        //  duration = $(this).children("option:selected").val();
+        // });
+
+        //  $("#order").change(function () {
+        //  order = $(this).children("option:selected").val();
+        // });
+        $("#form").submit(function(event) {
+            event.preventDefault()
+            search = $("#search").val().replaceAll('#', '').replaceAll('+', '');
+
+
+            $('.col-md-12').append('<div id="filtericon"><img id="filter" src="img/posting administration/filter-list.png"/><label class="fil" style="margin-bottom: 5px; display: inline-block;">FILTERS</label></div>');
+            $('#filtericon').on("click", function(e) {
+                $('.flters').toggle('');
+            });
+            url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}
+        &part=snippet&maxResults=${maxResults}&type=video&q=${search}`
+            $.ajax({
+                method: "GET",
+                url: url,
+                beforeSend: function() {
+                    $("#videos").empty();
+                },
+                success: function(data) {
+                    console.log(data);
+                    displayVideos(data);
+                },
+            });
+        });
+
+        function forsort(event, jsonfor) {
+            event.preventDefault()
+            search = $("#search").val().replaceAll('#', '').replaceAll('+', '');
+            $('.col-md-12').append('<div id="filtericon"><img id="filter" src="img/posting administration/filter-list.png"/><label class="fil" style="margin-bottom: 5px; display: inline-block;">FILTERS</label></div>');
+            $('img#filter').on("click", function(e) {
+                $('.flters').toggle('');
+            });
+            url3 = url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}
+        &part=snippet&maxResults=${maxResults}&type=video&q=${search}&order=${jsonforswitch.order}&videoDuration=${jsonforswitch.videoDuration}&type=${jsonforswitch.type}&publishedAfter=${jsonforswitch.publishedAfter}`
+            $.ajax({
+                method: "GET",
+                url: url3,
+                beforeSend: function() {
+                    $("#videos").empty()
+                },
+                success: function(data) {
+                    console.log(data);
+                    displayVideos(data);
+                },
+            });
+        }
+        let jsonforswitch = {
+            publishedAfter: '',
+            type: '',
+            videoDuration: 'any',
+            order: 'relevance'
+        }
+        let youtuberesponse = '';
+        jQuery(document).on('click', 'table tbody tr:not(:nth-child(1)) td', (ele) => {
+            const currentindex = jQuery(ele.target).index();
+            if (currentindex === 0) {
+                const forzero = jQuery(ele.target).text().toLowerCase();
+                let today = new Date();
+                if (forzero === 'last hour') {
+                    var numberOfMlSeconds = today.getTime();
+                    var addMlSeconds = (1 * 60) * 60 * 1000;
+                    let newDateObj = new Date(numberOfMlSeconds - addMlSeconds);
+                    newDateObj = newDateObj.toISOString();
+                    jsonforswitch.publishedAfter = newDateObj;
+                } else if (forzero === 'today') {
+                    today.setHours(0, 0, 0, 0);
+                    today = today.toISOString();
+                    jsonforswitch.publishedAfter = today;
+                } else if (forzero === 'this week') {
+                    Date.prototype.subDays = function(days) {
+                        var date = new Date(this.valueOf());
+                        date.setDate(date.getDate() - days);
+                        return date;
+                    }
+                    let date = new Date();
+                    if (date.getDay() === 0) {
+                        date.subDays(0)
+                        date.setHours(0, 0, 0, 0);
+                    }
+                    if (date.getDay() === 1) {
+                        date.subDays(1)
+                        date.setHours(0, 0, 0, 0);
+                    }
+                    if (date.getDay() === 2) {
+                        date.subDays(2)
+                        date.setHours(0, 0, 0, 0);
+                    }
+                    if (date.getDay() === 3) {
+                        date.subDays(3)
+                        date.setHours(0, 0, 0, 0);
+                    }
+                    if (date.getDay() === 4) {
+                        date.subDays(4)
+                        date.setHours(0, 0, 0, 0);
+                    }
+                    if (date.getDay() === 5) {
+                        date.subDays(5)
+                        date.setHours(0, 0, 0, 0);
+                    }
+                    if (date.getDay() === 6) {
+                        date.subDays(6)
+                        date.setHours(0, 0, 0, 0);
+                    }
+                    jsonforswitch.publishedAfter = date.toISOString();
+                } else if (forzero === 'this month') {
+                    today.setDate(1);
+                    today.setHours(0, 0, 0, 0);
+                    jsonforswitch.publishedAfter = today.toISOString();
+                } else if (forzero === 'this year') {
+                    today.setDate(1);
+                    today.setMonth(0);
+                    today.setHours(0, 0, 0, 0);
+                    jsonforswitch.publishedAfter = today.toISOString();
+                }
+            }
+            if (currentindex === 1) {
+                const forone = jQuery(ele.target).text().toLowerCase();
+                if (forone === 'video') {
+                    jsonforswitch.type = 'video';
+                } else if (forone === 'channel') {
+                    jsonforswitch.type = 'channel'
+                } else if (forone === 'playlist') {
+                    jsonforswitch.type = 'playlist';
+                }
+            }
+            if (currentindex === 2) {
+                const fortwo = jQuery(ele.target).text().toLowerCase();
+                if (fortwo === 'under 4 minutes') {
+                    jsonforswitch.videoDuration = 'short';
+                } else if (fortwo === '4-20 minutes') {
+                    jsonforswitch.videoDuration = 'medium';
+
+                } else if (fortwo === 'over 20 minutes') {
+                    jsonforswitch.videoDuration = 'long';
+                }
+            }
+            if (currentindex === 3) {
+                const forthree = jQuery(ele.target).text().toLowerCase();
+                if (forthree === 'relevance') {
+                    jsonforswitch.order = 'relevance'
+                } else if (forthree === 'upload date') {
+                    jsonforswitch.order = 'date'
+                } else if (forthree === 'view count') {
+                    jsonforswitch.order = 'viewCount'
+                } else if (forthree === 'rating') {
+                    jsonforswitch.order = 'rating';
+                }
+            }
+            forsort(event, jsonforswitch);
+        });
+
+        function displayVideos(data) {
+
+            recPerPage = data.pageInfo.resultsPerPage;
+            nextPageToken = data.nextPageToken;
+
+            totalRecords = data.pageInfo.totalResults;
+            totalPages = Math.ceil(totalRecords / recPerPage);
+            apply_pagination();
+
+            var videoData = ""
+            data.items.forEach(item => {
+                videoData = `
+           <input type="checkbox" class="exp" name="videos[]">
+           <iframe width="500" height="315 " src="https://www.youtube.com/embed/${item.id.videoId}" frameborder="0" allowfullscreen></iframe>
+            <p style="display:none">${item.snippet.title}</p>
+            `
+                $("#videos").append(videoData)
+            });
+            $(document).on('click', 'button.post', () => {
+                Sendpostdata(data);
+            });
+        }
+
+
+
+        function apply_pagination() {
+            $pagination.twbsPagination({
+                totalPages: totalPages,
+                visiblePages: 6,
+                onPageClick: function(event, page) {
+                    console.log(event);
+                    displayRecordsIndex = Math.max(page - 1, 0) * recPerPage;
+                    endRec = displayRecordsIndex + recPerPage;
+                    console.log(displayRecordsIndex + " sssssssss" + endRec);
+                    displayRecords = records.slice(displayRecordsIndex, endRec);
+                    generateRecords(recPerPage, nextPageToken, jsonforswitch);
+                }
+            });
+
+        }
+
+
+
+
+        function generateRecords(recPerPage, nextPageToken, jsonforswitch) {
+            var url2 = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}
+   &part=snippet&q=${search}&maxResults=${maxResults}&pageToken=${nextPageToken}&type=video&order=${jsonforswitch.order}&videoDuration=${jsonforswitch.videoDuration}&type=${jsonforswitch.type}&publishedAfter=${jsonforswitch.publishedAfter}`;
+            $.ajax({
+                method: 'GET',
+                url: url2,
+                beforeSend: function() {},
+                success: function(data) {
+                    console.log(data)
+                    displayVideos(data)
+                }
+            })
+        }
+
+
+
+    })
+
+
+    const responseofjson = '';
+    const post = async() => {
+        var token = sessionStorage.getItem('_token');
+        data = {
+            "activityBody": {
+                "activityObject": {
+
+                },
+                "activityType": "post_activity",
+                "description": "descrition",
+                "locationPost": 1,
+                "privacy": "PUBLIC"
+            },
+            "image": {
+                "id": linkID,
+                "type": "internal/media"
+            }
+        }
+        console.log(data);
+        const response_ = await fetch('https://proxy.actv.05media.com/rest/private/sinactivityservice/add', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Authorization': token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+
+    function Sendpostdata(data) {
+        var linkID = $('input.exp:checked + iframe').attr('src');
+        const selected = data.items.filter(ele => ele.id.videoId === linkID.split('embed/')[1]);
+
+        function postvideo(meta) {
+            var data = {
+                "activityObject": {
+                    "content": {
+                        "id": meta.ids,
+                        "type": "05media/video"
+                    },
+                    "image": {
+                        "id": meta.thumbnail[0].url,
+                        "type": "internal/interactivity"
+                    },
+                    "location": {
+                        "coordinate": "32.943660736083984,-117.20881652832031",
+                        "name": "92130 - San Diego County"
+                    }
+                },
+                "activityType": "POST_ACTIVITY",
+                "description": `${meta.description}  ratio \u003d 16:9`,
+                "locationPost": false,
+                "privacy": "Public"
+            }
+            const Upload2 = async() => {
+                // update = true;
+                const response_ = await fetch('https://proxy.actv.05media.com:443/rest/private/sinactivityservice/add', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': sessionStorage.getItem("_token"),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                });
+                const res = await response_.json();
+                console.log(res)
+            }
+            Upload2();
+        }
+
+        function importvideo(item, channelID) {
+            var key = item.id.videoId;
+            var data = {};
+            data[key] = "News & Politics";
+
+            const Upload = async() => {
+                // update = true;
+                const response_ = await fetch('https://proxy.actv.05media.com/services/v1/youtubeacquisition/vod-videos/action/import', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': sessionStorage.getItem("_token"),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                });
+                const internalVideoID = await response_.json();
+                console.log(internalVideoID)
+                var passinternalvideoId = internalVideoID[key];
+                getvideoMetadata(channelID, passinternalvideoId);
+            }
+            Upload();
+        }
+
+        function getvideoMetadata(channelID, videointernalID) {
+
+            const Upload = async() => {
+                // update = true;
+                const response_ = await fetch("https://proxy.actv.05media.com/services/v1/videos/vodmetadata/" + videointernalID, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': sessionStorage.getItem("_token"),
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const videometadata = await response_.json();
+                console.log(videometadata);
+                postvideo(videometadata);
+            }
+            Upload();
+        }
+
+        importvideo(selected[0], selected[0].snippet.channelID)
+    }
+</script>
+
+<body>
+    <div id="header"></div>
+    <div class="container">
+        <br>
+        <h1>Youtube</h1>
+        <button class="post ">POST <i class="fa fa-angle-right " aria-hidden="true "></i><img id="loader1" src="img/loader1.gif" style="display: none;width:20px;"></button>
+        <form id="form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="search">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn -danger" value="search">
+
+            </div>
+            <div class="row">
+
+
+
+
+
+                <div class="col-md-12">
+                    <div class="flters">
+                        <table style="width:100%">
+                            <tr class="head">
+                                <th>UPLOAD DATE:</th>
+                                <th>TYPE:</th>
+                                <th>DURATION:</th>
+                                <th>SORT BY:</th>
+
+                            </tr>
+
+
+                            <tr class="uploaddate">
+
+                                <td>Last Hour</td>
+                                <td>video</td>
+                                <td>Under 4 Minutes</td>
+                                <td id="order">Relevance</td>
+                            </tr>
+                            <tr class="type">
+                                <td>Today</td>
+                                <td></td>
+                                <td>4-20 Minutes</td>
+                                <td>Upload date</td>
+                            </tr>
+                            <tr class="duration">
+                                <td>This week</td>
+                                <td></td>
+                                <td>Over 20 minutes</td>
+                                <td id="viewCount">View Count</td>
+                            </tr>
+                            <tr class="sortby">
+                                <td>This Month</td>
+                                <td></td>
+                                <td></td>
+                                <td>Rating</td>
+                            </tr>
+                            <tr class="dataa">
+                                <td>This year</td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div id="videos">
+
+                    </div>
+
+
+
+                </div>
+                <div id="pager">
+                    <ul id="pagination" class="pagination-sm">
+
+                    </ul>
+                </div>
+
+
+            </div>
+</body>
+
+</html>
